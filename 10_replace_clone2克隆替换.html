@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    body {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>替换节点</h1>
+
+  <div id="chosen">
+    <img src="img/p0.png">
+  </div>
+  <hr />
+  <div id="list">
+    <img src="img/p3.png">
+    <img src="img/p4.png">
+    <img src="img/p5.png">
+  </div>
+
+  <script src="js/jquery-1.11.3.js"></script>
+  <script>
+    //DOM 4步
+    //1. 查找触发事件的元素
+    //本例中: 因为三个飞机都可点，所以，事件只要绑定在父元素div上一份即可。
+    //2. 绑定事件处理函数
+    // 判断，只有点在img元素上，才执行操作
+    $("#list").on("click","img",function(){
+      //3. 查找要修改的元素
+      //本例中，先将当前图片复制一个副本，再用副本去代替id为chosen下的img
+      //4. 修改元素
+      $(this).clone().replaceAll("#chosen>img");//clone()克隆//replaceAll替换元素
+    })
+  </script>
+</body>
+
+</html>
