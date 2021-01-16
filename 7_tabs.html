@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <style>
+    .tabs{ list-style:none; padding:0 }
+    .tabs a{
+      text-decoration:none;
+			color:#000;
+			padding:6px 12px;
+			display:inline-block;
+    }
+    .tabs>li{
+      float:left;
+      border-bottom:1px solid #000;
+    }
+    .tabs>.active{
+      border:1px solid #000;
+      border-bottom:0;
+    }
+  </style>
+ </head>
+ <body>
+		<h1>使用属性选择器实现标签页头的切换</h1>
+		<ul class="tabs">
+			<li class="active">
+        <a data-toggle="tab" href="#">十元套餐</a>
+      </li>
+			<li>
+        <a data-toggle="tab" href="#">二十元套餐</a>
+      </li>
+			<li>
+        <a data-toggle="tab" href="#">三十元套餐</a>
+      </li>
+    </ul>
+    <script src="js/jquery-1.11.3.js"></script>
+    <script>
+
+      $(".tabs").click(function(e){
+        var $tar=$(e.target);
+        if($tar.is("a")){
+          $tar.parent().addClass("active")
+              .siblings().removeClass("active");
+        }
+      })
+
+      //DOM 4步
+      //1. 查找触发事件的元素
+      //本例中: 因为所有a都可以点击，所以应该用事件委托优化。事件应该只绑定在ul上一份——事件委托，复习DOM第四天
+      //2. 绑定事件处理函数
+      $(".tabs").click(function(e){
+        //用e.target代替this，在Dom中e.target是每个元素自带的，所有点击元素会自动锁定她的e.target，而this在委托事件中是没有办法进行锁定元素的
+        var $tar=$(e.target);//当前点的a
+        //判断当前e.target是不是我们想要的
+        //如果target是a元素的话，才能继续。
+        //DOM中: if(e.target.nodeName=="a"){//再Dom中e.target.nodeName返回的值是大写的，所以必须和大写的进行比较
+        //jq中:    元素选择器
+        if($tar.is("a")){//为了防止点错别的元素造成e.targrt获取错误信息，先进行元素的判断，保证是我们想要的元素，再进行相关的操作。
+          //3. 查找要修改的元素
+          //4. 修改元素
+          //先给当前a的爹li添加class active
+          $tar.parent() //返回当前a的父元素li
+              .addClass("active") 
+                //返回.前的当前a的父元素li
+              //再给当前a的爹li的其余兄弟移除class active
+              .siblings()
+              .removeClass("active");
+            //链式操作: 只要前一个函数的返回值和后一个函数所需的.前的主语相同时，就可以将后一个函数直接连在前一个函数之后。
+        }
+      }) 
+    </script>
+ </body>
+</html>
