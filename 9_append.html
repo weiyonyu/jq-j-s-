@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title> new document </title>
+  <meta charset="utf-8">
+	<style>
+		.container {
+			border: 1px solid #aaa;  overflow:hidden;
+		}
+		.block {
+			float: left; margin: 10px;
+			border: 1px solid #aaa;
+			background: #faa;
+			width: 150px; height: 150px;
+		}
+		.block:hover{ box-shadow:0 5px 6px #000; }
+		.close {
+			float:right; padding:5px;
+			font-weight:bold; opacity:.2; cursor: pointer;
+		}
+		.close:hover { opacity: .5; }
+	</style>
+ </head>
+ <body>
+  <h1>添加/删除节点</h1>
+	<button id="add-block">添加区块</button>
+	
+	<div class="container">
+		<div class="block">
+			<span class="close">×</span>
+		</div>
+	</div>
+	
+	<script src="js/jquery-1.11.3.js"></script>
+	<script>
+		$("#add-block").click(function(){
+			// 获取=事件元素
+			$(`<div class="block">
+			<span class="close">×</span>
+		</div>`)//被创建的元素对象直接写在$里面表示直接被创建
+			.css("background-color",//背景颜色属性
+			`rgba(${
+				parseInt(Math.random()*256)
+			},${
+				parseInt(Math.random()*256)
+			},${
+				parseInt(Math.random()*256)
+			},${(Math.random())}`)//rgba4个颜色的随机取值，生成随机盒子
+			.prependTo(".container");//   1). 在父元素下所有子元素末尾追加新元素:
+                   //$父元素.append($新元素) 返回父元素，后续可接对父元素执行的操作。
+                   //$新元素.appendTo($父元素) 返回新元素，后续可接对新元素执行的操作
+                   //2). 在父元素下所有子元素开头插入新元素:
+                   //$父元素.prepend($新元素) 返回如果是父元素可以用这个接著
+                   //$新元素.prependTo($父元素)返回如果是新元素就用这个接著
+		})
+
+		$(".container").click(function(e){
+		 	var $tar=$(e.target);
+			if($tar.is("span")){//如果tar是span元素的话
+				$tar.parent().remove()//它的父元素就会被移除
+			}
+		})
+	</script>
+	
+ </body>
+</html>
